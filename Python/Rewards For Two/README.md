@@ -22,6 +22,6 @@ Output = f"[{today}]: '{user}' has {EndPoints} points [Up {Sum} points]"
 
 After each session it will close and restart the session.
 
-You'll need to run: ```py -m pip install -r requirements.txt``` for this to work and install drivers from:
+You'll need to run: ```py -m pip install -r requirements.txt``` for this to work and install drivers from: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 
 
