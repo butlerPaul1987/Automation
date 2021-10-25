@@ -12,7 +12,7 @@
 # Variables
 Clear-Host # clears host (console screen)
 $FolderToCheck = 'C:\Users\pb001\Desktop\Check\'
-$Ext = '.JPG'
+$Ext = '.TIM' # change extension type if needed
 $MovedFiles = 'C:\Users\pb001\Desktop\Check\Moved'
 $LogLocation = 'C:\Users\pb001\Desktop\Check\Logs\'
 $Days = 30 # delete log files after this many days
