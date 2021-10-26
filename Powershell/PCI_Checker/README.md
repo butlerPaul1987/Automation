@@ -1,0 +1,2 @@
+# PCI Checker
+This was a small script I'd written to check over an estate of a company we were looking after in a previous role and see that certain security updates had been applied. There were around 300 sites and 3-5 devices on each site. The task was to open any KB log file and check for certain keywords as at the time, these were being performed manually - thus saving the users responsible months of time. As you can see there were different folders, actions etc to be taken. This could be cleared up and made simpler but for the time and urgency, this was warranted.
