@@ -11,7 +11,7 @@
     v1.0            PButler        28/05/2019          Test version using 172.16.4.111.: 
     v1.1            PButler        29/05/2019          Adding HTML conditional formatting     
     v1.2            PButler        29/05/2019          Added try{} catch{} for service checker.  
-    v1.3            PButler	       31/05/2019	       Added clean up of functions etc (general housekeeping)	
+    v1.3            PButler	   31/05/2019	       Added clean up of functions etc (general housekeeping)	
     v1.4            PButler        03/05/2019          Adding Invoke-sqlcmd commandlet for shift 11 issue. **not working**
     v1.5            PButler        04/06/2019          Slowly adding in service restarts:
     v1.6            PButler        11/06/2019          Adding service checkers for powershell CLI - removed for now 
