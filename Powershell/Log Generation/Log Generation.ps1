@@ -6,7 +6,7 @@
     Version:    Author:    	Changes:  
     --------    -------    	--------
     v1.0        P.Butler   	Initial draft 
-	v1.1		P.Butler	Added file move capacity
+    v1.1	P.Butler	Added file move capacity
 
 #>
 
