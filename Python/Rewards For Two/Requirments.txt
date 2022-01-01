@@ -1,7 +1,10 @@
-os
-time
-random
+# below listed are the pre-reqs required for this script to run.
+# Enjoy!
+
+#os - pre installed
+#time - pre installed
+#random - pre installed
 requests
-json
+#json - pre installed
 datetime
 selenium
