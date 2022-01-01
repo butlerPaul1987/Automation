@@ -22,6 +22,13 @@ Output = f"[{today}]: '{user}' has {EndPoints} points [Up {Sum} points]"
 
 After each session it will close and restart the session.
 
-You'll need to run: ```py -m pip install -r requirements.txt``` for this to work and install drivers from: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+You'll need to run (in order): 
+1. Open preferred CLI (Powershell/CMD) and run: ```Set-Location C:\Users\$env:username\Desktop\ ; curl -Uri https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt -OutFile requirements.txt```
+2. When this has downloaded run ```py -m pip install -r requirements.txt``` 
+3. Then run the next sequence of commands:
+	- Download WebDriver / create directory: ```if(!(Test-Path C:\Users\$env:username\Desktop\Drivers\)){ New-Item -Path C:\Users\$env:username\Desktop\Drivers\ -ItemType Directory | Out-Null } ; curl -Uri 'https://msedgedriver.azureedge.net/96.0.1054.62/edgedriver_win64.zip' -OutFile .\Drivers\edgedriver.zip```
+	- Unzip webdriver: ```Expand-Archive -Path .\Drivers\edgedriver.zip -DestinationPath C:\Users\$env:username\Desktop\Drivers\```
+
+
 
 
