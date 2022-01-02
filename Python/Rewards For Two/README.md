@@ -25,8 +25,8 @@ After each session it will close and restart the session.
 You'll need to run (in order): 
 1. Open preferred CLI (Powershell/CMD) and run: 
 ```powershell
-	Set-Location "C:\Users\$env:username\Desktop\" 
-	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt" -OutFile requirements.txt
+Set-Location "C:\Users\$env:username\Desktop\" 
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt" -OutFile requirements.txt
 ```
 3. When this has downloaded run ```py -m pip install -r requirements.txt``` 
 4. Then run the next sequence of commands:
