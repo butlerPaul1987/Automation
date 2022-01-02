@@ -25,21 +25,21 @@ After each session it will close and restart the session.
 You'll need to run (in order): 
 1. Open preferred CLI (Powershell/CMD) and run: 
 ```powershell
-	Set-Location C:\Users\$env:username\Desktop\  
-	Invoke-WebRequest -Uri https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt -OutFile requirements.txt
+	Set-Location "C:\Users\$env:username\Desktop\" 
+	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt" -OutFile requirements.txt
 ```
 3. When this has downloaded run ```py -m pip install -r requirements.txt``` 
 4. Then run the next sequence of commands:
 - Download WebDriver / create directory: 
 ```powershell
-if(!(Test-Path C:\Users\$env:username\Desktop\Drivers\)){ 
-	New-Item -Path C:\Users\$env:username\Desktop\Drivers\ -ItemType Directory | Out-Null 
+if(!(Test-Path "C:\Users\$env:username\Desktop\Drivers\")){ 
+	New-Item -Path "C:\Users\$env:username\Desktop\Drivers\" -ItemType Directory | Out-Null 
 }  
-Invoke-WebRequest -Uri 'https://msedgedriver.azureedge.net/96.0.1054.62/edgedriver_win64.zip' -OutFile .\Drivers\edgedriver.zip
+Invoke-WebRequest -Uri "https://msedgedriver.azureedge.net/96.0.1054.62/edgedriver_win64.zip" -OutFile .\Drivers\edgedriver.zip
 ```
 - Unzip webdriver: 
 ```powershell
-Expand-Archive -Path .\Drivers\edgedriver.zip -DestinationPath C:\Users\$env:username\Desktop\Drivers\
+Expand-Archive -Path .\Drivers\edgedriver.zip -DestinationPath "C:\Users\$env:username\Desktop\Drivers\"
 ```
 
 
