@@ -42,6 +42,8 @@ Invoke-WebRequest -Uri "https://msedgedriver.azureedge.net/96.0.1054.62/edgedriv
 Expand-Archive -Path .\Drivers\edgedriver.zip -DestinationPath "C:\Users\$env:username\Desktop\Drivers\"
 ```
 
+### Alternatively run Install.ps1 ;)
+
 
 
 
