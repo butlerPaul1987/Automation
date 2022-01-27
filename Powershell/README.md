@@ -74,3 +74,6 @@ This was written as a stopgap as we had missing features for certain software, w
 - [x] Checks files in certain directory
 - [x] If count in said directory is greater than 0 it will move the files
 - [x] It will format and send an email to alert staff of quarantined files
+
+### PostgreSQL backup script
+This was written with the goal of generating nightly backups of our Postgres databases and generating a log file which would get emailed daily to a given recipient.
