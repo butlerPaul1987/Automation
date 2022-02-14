@@ -90,4 +90,4 @@ else
   echo "MySQL is already installed"
   printf "to log in press: ${YELLOW}mysql -u root ${NC}%b\n"
   echo ""
-  fi
+fi
