@@ -53,6 +53,7 @@ ${YELLOW}    | xx | xxxx| x| xx  \__/  | xx | xx  \ x| xx     | xx     | xx     
 "
 
 # insert linebreak #
+echo "" # looks nicer this way
 SECTION="Updates/Upgrades"
 echo $LineBreak
 
@@ -64,6 +65,7 @@ apt-get upgrade -y  # assumes you're a super user
 if ! command -v mysql --version &> /dev/null
 then
   # insert linebreak #
+  echo "" # looks nicer this way
   SECTION="MySQL Installation"
   echo $LineBreak
   
@@ -84,6 +86,7 @@ then
 
 else
   # insert linebreak #
+  echo "" # looks nicer this way
   SECTION="Already Installed"
   echo $LineBreak
   # Mysql already exists
