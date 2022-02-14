@@ -18,12 +18,13 @@
 ###########################################################################################################
 
 # Initial variables
-LineBreak="|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|"
 VERSION=1.0
+TITLE="MySQL Installer"
 CYAN='\033[0;36m'
 LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m' 
 NC='\033[0m' # No Color
+LineBreak="|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx[ $VERSION : $TITLE ]xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|"
 
 # check if superuser
 if [ "$EUID" -ne 0 ]
