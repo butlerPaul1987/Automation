@@ -14,10 +14,11 @@
 #    .NOTES
 #        Version:        Author         Creation Date:              Purpose/Change:
 #        1.0             PButler        07/02/2022                  Initial Build
-#       
+#
 ###########################################################################################################
 
 # Initial variables
+LineBreak="|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|"
 VERSION=1.0
 CYAN='\033[0;36m'
 LIGHTCYAN='\033[1;36m'
@@ -32,34 +33,40 @@ fi
 
 # set a title
 printf "
-${CYAN}               /xx      /xx/xx     /xx/xxxxxx  /xxxxxx /xx                             
-              | xxx    /xx|  xx   /xx/xx__  xx/xx__  x| xx                             
-              | xxxx  /xxxx\  xx /xx| xx  \__| xx  \ x| xx                              
-              | xx xx/xx xx \  xxxx/|  xxxxxx| xx  | x| xx                              
-              | xx  xxx| xx  \  xx/  \____  x| xx  | x| xx                              
-${LIGHTCYAN}              | xx\  x | xx   | xx   /xx  \ x| xx/xx x| xx                              
-              | xx \/  | xx   | xx  |  xxxxxx|  xxxxxx| xxxxxxxx                        
-              |__/     |__/   |__/   \______/ \____ xx|________/                        
-   /xxxxxx/xx   /xx /xxxxxx /xxxxxxxx/xxxxxx /xx   \__/xx      /xxxxxxxx/xxxxxxx        
-  |_  xx_| xxx | xx/xx__  x|__  xx__/xx__  x| xx     | xx     | xx_____| xx__  xx       
+${CYAN}               /xx      /xx/xx     /xx/xxxxxx  /xxxxxx /xx
+              | xxx    /xx|  xx   /xx/xx__  xx/xx__  x| xx
+              | xxxx  /xxxx\  xx /xx| xx  \__| xx  \ x| xx
+              | xx xx/xx xx \  xxxx/|  xxxxxx| xx  | x| xx
+              | xx  xxx| xx  \  xx/  \____  x| xx  | x| xx
+${LIGHTCYAN}              | xx\  x | xx   | xx   /xx  \ x| xx/xx x| xx
+              | xx \/  | xx   | xx  |  xxxxxx|  xxxxxx| xxxxxxxx
+              |__/     |__/   |__/   \______/ \____ xx|________/
+   /xxxxxx/xx   /xx /xxxxxx /xxxxxxxx/xxxxxx /xx   \__/xx      /xxxxxxxx/xxxxxxx
+  |_  xx_| xxx | xx/xx__  x|__  xx__/xx__  x| xx     | xx     | xx_____| xx__  xx
 ${YELLOW}    | xx | xxxx| x| xx  \__/  | xx | xx  \ x| xx     | xx     | xx     | xx  \ xx       
-    | xx | xx xx x|  xxxxxx   | xx | xxxxxxx| xx     | xx     | xxxxx  | xxxxxxx/       
-    | xx | xx  xxxx\____  xx  | xx | xx__  x| xx     | xx     | xx__/  | xx__  xx       
-    | xx | xx\  xxx/xx  \ xx  | xx | xx  | x| xx     | xx     | xx     | xx  \ xx       
-   /xxxxx| xx \  x|  xxxxxx/  | xx | xx  | x| xxxxxxx| xxxxxxx| xxxxxxx| xx  | xx       
-  |______|__/  \__/\______/   |__/ |__/  |__|________|________|________|__/  |__/ ${NC}                                                                                                  
+    | xx | xx xx x|  xxxxxx   | xx | xxxxxxx| xx     | xx     | xxxxx  | xxxxxxx/
+    | xx | xx  xxxx\____  xx  | xx | xx__  x| xx     | xx     | xx__/  | xx__  xx
+    | xx | xx\  xxx/xx  \ xx  | xx | xx  | x| xx     | xx     | xx     | xx  \ xx
+   /xxxxx| xx \  x|  xxxxxx/  | xx | xx  | x| xxxxxxx| xxxxxxx| xxxxxxx| xx  | xx
+  |______|__/  \__/\______/   |__/ |__/  |__|________|________|________|__/  |__/ ${NC}
 "
+
+# insert linebreak #
+echo $LineBreak
 
 # start actually doing stuff
 apt-get update -y   # assumes you're a super user
 apt-get upgrade -y  # assumes you're a super user
-clear
 
+# insert linebreak #
+echo $LineBreak
 
 # Check if MYSQL installed
 if ! command -v mysql --version &> /dev/null
 then
-
+  # insert linebreak #
+  echo $LineBreak
+  
   # installs MySQL
   apt install mysql-server
 
@@ -76,7 +83,8 @@ then
   printf "Installation now complete to log in press: ${YELLOW}mysql -u root ${NC} to continue"
 
 else
-
+  # insert linebreak #
+  echo $LineBreak
   # Mysql already exists
   echo "MySQL is already installed"
   printf "to log in press: ${YELLOW}mysql -u root ${NC}"
