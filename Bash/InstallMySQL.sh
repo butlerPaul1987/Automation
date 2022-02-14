@@ -88,5 +88,5 @@ else
   echo $LineBreak
   # Mysql already exists
   echo "MySQL is already installed"
-  printf "to log in press: ${YELLOW}mysql -u root ${NC}"
+  printf "to log in press: ${YELLOW}mysql -u root ${NC}%b\n"
   fi
