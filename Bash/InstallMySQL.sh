@@ -18,13 +18,13 @@
 ###########################################################################################################
 
 # Initial variables
-VERSION=1.0
-TITLE="MySQL Installer"
+VERSION="v1.0"
+SECTION="MySQL Installer"
 CYAN='\033[0;36m'
 LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m' 
 NC='\033[0m' # No Color
-LineBreak="|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx[ $VERSION : $TITLE ]xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|"
+LineBreak="|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx[ $VERSION : $SECTION ]xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|"
 
 # check if superuser
 if [ "$EUID" -ne 0 ]
@@ -53,19 +53,18 @@ ${YELLOW}    | xx | xxxx| x| xx  \__/  | xx | xx  \ x| xx     | xx     | xx     
 "
 
 # insert linebreak #
+SECTION="Updates/Upgrades"
 echo $LineBreak
 
 # start actually doing stuff
 apt-get update -y   # assumes you're a super user
 apt-get upgrade -y  # assumes you're a super user
 
-# insert linebreak #
-echo $LineBreak
-
 # Check if MYSQL installed
 if ! command -v mysql --version &> /dev/null
 then
   # insert linebreak #
+  SECTION="MySQL Installation"
   echo $LineBreak
   
   # installs MySQL
@@ -85,8 +84,10 @@ then
 
 else
   # insert linebreak #
+  SECTION="Already Installed"
   echo $LineBreak
   # Mysql already exists
   echo "MySQL is already installed"
   printf "to log in press: ${YELLOW}mysql -u root ${NC}%b\n"
+  echo ""
   fi
