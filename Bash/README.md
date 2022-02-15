@@ -30,3 +30,6 @@ This runs in the following steps:
 3. Checks if MySQL is installed
 4. If installed it outputs "MySQL is already installed"
 5. If not installed it installs
+
+### Example
+![This is an image](https://github.com/butlerPaul1987/Automation/blob/main/Bash/example.jpg?raw=true)
