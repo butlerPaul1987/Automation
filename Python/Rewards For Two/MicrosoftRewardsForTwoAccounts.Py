@@ -7,21 +7,13 @@ import json
 import datetime
 from selenium import webdriver
 
-# before doing anything. perform random sleep time
-BeforeYouStart = [
-    600, 505.1, 666.2, 60, 100, 150.2
-]
-SleepTimer = random.choice(BeforeYouStart)
-time.sleep(SleepTimer)
 
 # config stuff #####################
 AccountEmail = [
-    "xxx-xxxxx@hotmail.com", 
-    "xxxxxxx@hotmail.com"
+    "xxx-xxxxxxxx@hotmail.com"
 ]
 AccountPword = [
-    "xxxxxxxx", 
-    "xxxxxxxx!"
+    "xxxxxxxxxx"
 ]
 RTime = [
     3.7,4,4.1,4.4,4.5,5,6.1,7,7.9,8,8.3,8.5
@@ -36,11 +28,13 @@ words_list = random.sample(json.loads(response.text)['data'], 30)
 # end config stuff #####################
 
 for user in AccountEmail:
-    driver = webdriver.Edge("c:\\users\\pb001\\Desktop\\Drivers\\msedgedriver.exe")
-    driver.get("https://login.live.com/")
-    time.sleep(6)
+    driver = webdriver.Edge("c:\\users\\paulf\\Desktop\\Drivers\\msedgedriver.exe")
+    driver.get("https://www.bing.com/search?q=steam")
+    time.sleep(5)
+    driver.find_element_by_id("id_a").click()
+    time.sleep(5)
 
-    # enter username
+    # log on user
     print("Logging on using email:", user)
     driver.find_element_by_id("i0116").send_keys(user)
     driver.find_element_by_id("idSIButton9").click()
@@ -50,7 +44,10 @@ for user in AccountEmail:
     driver.find_element_by_id ("i0118").send_keys(AccountPword[List])
     driver.find_element_by_id("idSIButton9").click()
     time.sleep(6)
-    List = List + 1
+
+    # click accept...
+    driver.find_element_by_id("idSIButton9").click()
+    time.sleep(6)
 
     # search 30 times
     search = 1
@@ -68,16 +65,6 @@ for user in AccountEmail:
         search = search + 1
         time.sleep(GetRandTime)
 
-    # get deets of reward points count
-    EndPoints = driver.find_element_by_id("id_rc").text
-    Sum = int(EndPoints) - int(StartPoints)
-    Output = f"[{today}]: '{user}' has {EndPoints} points [Up {Sum} points]"
-
-    # output to file
-    f = open(("c:\\users\\pb001\\Desktop\\Rewards.txt"), "a")
-    f.write(f"{Output}\n")
-    f.close()
-
     # sign off
     driver.find_element_by_id("id_p").click()
     time.sleep(2)
@@ -87,6 +74,6 @@ for user in AccountEmail:
     time.sleep(10)
 
 # finish off file with a line
-f = open(("c:\\users\\pb001\\Desktop\\Rewards.txt"), "a")
+f = open(("c:\\users\\paulf\\Desktop\\MSPoints\\Rewards.txt"), "a")
 f.write("-===============================================================================-\n")
 f.close()
