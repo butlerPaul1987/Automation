@@ -2,6 +2,7 @@
 -- Author: 	Paul B
 -- Date:	23/03/2023
 -- Version:	v1.2
+-- Flavour:	PostgreSQL
 
 SELECT 
     chdt.CHANGEID "Change ID",
