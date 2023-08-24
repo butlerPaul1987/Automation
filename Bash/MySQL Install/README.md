@@ -32,4 +32,4 @@ This runs in the following steps:
 5. If not installed it installs
 
 ### Example
-![This is an image](https://github.com/butlerPaul1987/Automation/blob/main/Bash/example.jpg?raw=true)
+![This is an image](https://github.com/butlerPaul1987/Automation/blob/main/Bash/MySQL%20Install/example.jpg?raw=true)
