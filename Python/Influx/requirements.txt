@@ -1,0 +1,7 @@
+# below listed are the pre-reqs required for this script to run.
+# Enjoy!
+
+requests
+datetime
+psutil
+influxdb-client
