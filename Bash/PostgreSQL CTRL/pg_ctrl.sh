@@ -89,6 +89,11 @@ pgOption(){
 
   # All host Process:
   #elif [ $SET_OPTION = "all-host-backup" ]; then
+  #    hosts = "server1, 
+  #        server2, 
+  #        server3, 
+  #        server4, 
+  #        server5"
   #    for h in $hosts; 
   #      BACKFILE="/var/backups/postgresql/pgdump-${h}-${DATETIME}.sql"
   #      do pg_dumpall --host $h --username 'sysbackup' --database 'postgres' --verbose --clean -f $BACKFILE; 
