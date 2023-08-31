@@ -44,8 +44,41 @@ Init(){
 }
 
 # Check for missing directory/ .pgpass file/...
-! test -d "/var/backups/postgresql" && echo "Missing directory /var/backups/postgresql" && exit 1
-! test -f "/root/.pgpass" && echo "Missing .pgpass file - passwordless access won't work" && exit 1
+SysCheck(){
+  ! test -d "/var/backups/postgresql" && echo "Missing directory /var/backups/postgresql" && exit 1
+  ! test -f "/root/.pgpass" && echo "Missing .pgpass file - passwordless access won't work" && exit 1
+}
+
+# Let's create some functions
+pgOption(){
+  # Check for options then perform action
+  DATETIME=$(date +%Y%m%j%H%M)
+  BACKFILE="/var/backups/postgresql/pgdump-${SET_HOST}-${DATETIME}.sql"
+
+  # Backup Process
+  if [ $SET_OPTION = "backup" ]; then
+      pg_dumpall --host $SET_HOST --username 'sysbackup' --database 'postgres' --verbose --clean -f $BACKFILE
+
+  # All host Process:
+  # elif [ $SET_OPTION = "all-host-backup" ]; then
+  #    hosts = "server_1, 
+  #        server_2, 
+  #        server_3, 
+  #        server_4, 
+  #        server_5"
+  #    for h in $hosts; 
+  #      BACKFILE="/var/backups/postgresql/pgdump-${h}-${DATETIME}.sql"
+  #      do pg_dumpall --host $h --username 'sysbackup' --database 'postgres' --verbose --clean -f $BACKFILE; 
+  #    done
+
+  # Restore Process:
+  elif [ $SET_OPTION = "restore" ]; then
+      psql -U sysbackup -h $SET_HOST -p $SET_PORT < $SET_RESTORE_FILE
+
+  # else ask for valid selection
+  else
+      printf "Please select a valid option: ${INFO}[BACKUP]${NC}, ${INFO}[ALL-HOST-BACKUP]${NC} OR ${INFO}[RESTORE]${NC}\n"
+  fi
 
 progArgs(){
   while [ ! -z "$1" ]; do
@@ -77,40 +110,9 @@ progArgs(){
   done
 }
 
-# Let's create some functions
-pgOption(){
-  # Check for options then perform action
-  DATETIME=$(date +%Y%m%j%H%M)
-  BACKFILE="/var/backups/postgresql/pgdump-${SET_HOST}-${DATETIME}.sql"
-
-  # Backup Process
-  if [ $SET_OPTION = "backup" ]; then
-      pg_dumpall --host $SET_HOST --username 'sysbackup' --database 'postgres' --verbose --clean -f $BACKFILE
-
-  # All host Process:
-  #elif [ $SET_OPTION = "all-host-backup" ]; then
-  #    hosts = "server1, 
-  #        server2, 
-  #        server3, 
-  #        server4, 
-  #        server5"
-  #    for h in $hosts; 
-  #      BACKFILE="/var/backups/postgresql/pgdump-${h}-${DATETIME}.sql"
-  #      do pg_dumpall --host $h --username 'sysbackup' --database 'postgres' --verbose --clean -f $BACKFILE; 
-  #    done
-
-  # Restore Process:
-  elif [ $SET_OPTION = "restore" ]; then
-      psql -U sysbackup -h $SET_HOST -p $SET_PORT < $SET_RESTORE_FILE
-
-  # else ask for valid selection
-  else
-      printf "Please select a valid option: ${INFO}[BACKUP]${NC} or ${INFO}[RESTORE]${NC}\n"
-  fi
-}
-
 # Main ------------------------
 Init \
+&& SysCheck \
 && pgOption \
 && progArgs $*
 
