@@ -1,2 +1,0 @@
-# Python-Projects
-I've set myself the goal of writing 10+ Python projects, which should increase in difficulty as they progress, to not only outline my capabilities, but also keep a note of my progression.
