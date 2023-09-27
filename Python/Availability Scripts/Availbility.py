@@ -3,9 +3,9 @@ import subprocess
 
 # server list
 servers = [
-    "toob.co.uk",
-    "portal.toob.co.uk",
-    "netadmin.toob.co.uk"
+    "server1.co.uk",
+    "server2.co.uk",
+    "server3.co.uk"
 ]
 
 def check_availability(server):
