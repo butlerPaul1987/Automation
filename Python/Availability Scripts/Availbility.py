@@ -10,7 +10,10 @@ servers = [
 
 def check_availability(server):
     try:
-        result = subprocess.run(["ping", "-c", "4", "toob.co.uk"], capture_output=True, text=True, check=True)
+        result = subprocess.run(["ping", "-c", "4", server], 
+                                capture_output=True, 
+                                text=True, 
+                                check=True)
         if "64 bytes from" in str(result):
             return f"{server} is reachable"
         else:
