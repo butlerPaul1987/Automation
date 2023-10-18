@@ -1,12 +1,11 @@
-﻿<#
+<#
 .SYNOPSIS
-  Installation script for Rewards For Two.py script which allows users to automate the manual process of bing searches.
+  Installation script for Rewards For Two.py script which automates the manual process of Bing searches.
 .DESCRIPTION
-  This has been written to automate the installation process, although there are installation steps I felt this could
-  imporve the installation process and streamline any possible issues. This installation script is run in 3 parts:
-    1. downloads the requirements.txt file from GitHub and runs them
-    2. downloads the webdrivers a
-    3. finally unzips the webdrivers and allows user to run script
+  This script automates the installation process for Rewards For Two.py by:
+    1. Downloading requirements.txt from GitHub and installing the Python packages.
+    2. Downloading and unzipping Microsoft Edge WebDriver.
+    3. Allowing the user to run the script.
 .INPUTS
   None
 .NOTES
@@ -16,50 +15,65 @@
   Purpose/Change: Initial script development
 #>
 
-#---------------------------------------------------------[Initialisations]--------------------------------------------------------
+# Set the error action to Stop on error
+$ErrorActionPreference = "Stop"
 
-#Set Error Action to Silently Continue
-$ErrorActionPreference = "SilentlyContinue"
-
-#----------------------------------------------------------[Declarations]----------------------------------------------------------
-
-#Script Version
+# Script Version
 $sScriptVersion = "1.0"
 
-#-----------------------------------------------------------[ScriptBlock]------------------------------------------------------------
+# Set the user's desktop path
+$DesktopPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop)
 
-# set the location to the desktop as the script requires this
-Set-Location C:\Users\$env:username\Desktop\
-
-# download the requirements.txt file from GitHub
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt -OutFile requirements.txt
-
-# check pip version/ if installed
-if(!(Get-Command python).version.Major){
-  Write-Host "Python not installed, please install Python and start again." -ForegroundColor Red
-}
-else{
-    if(!(Get-Command pip).Version){
-
-    # when downloaded, run the pip installation
-    py -m pip install -r requirements.txt
-   
-    # if the Drivers folder doesn't exist, create it
-    if(!(Test-Path C:\Users\$env:username\Desktop\Drivers\)){ 
-        New-Item -Path C:\Users\$env:username\Desktop\Drivers\ -ItemType Directory | Out-Null 
+# Function to install Python packages from requirements.txt
+function Install-PythonPackages {
+    if (-not (Test-Path $DesktopPath\Drivers)) {
+        New-Item -Path $DesktopPath\Drivers -ItemType Directory | Out-Null
     }
-    
-    # check version of edge (if/else)
-    $DriverVersion = (Get-ItemProperty -Path "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe").VersionInfo.ProductVersion
 
-    # Download the webdriver
-    Invoke-WebRequest -Uri "https://msedgedriver.azureedge.net/$DriverVersion/edgedriver_win64.zip" -OutFile .\Drivers\edgedriver.zip
+    if (-not (Get-Command pip)) {
+        Write-Host "Pip is not installed, please install Pip and start again." -ForegroundColor Red
+        return
+    }
 
-    # Unzip the webdriver
-    Expand-Archive -Path .\Drivers\edgedriver.zip -DestinationPath C:\Users\$env:username\Desktop\Drivers\
-    }
-    else{
-        Write-Host "Pip not installed, please install pip and start again." -ForegroundColor Red
-    }
+    # Install Python packages from requirements.txt
+    py -m pip install -r $DesktopPath\requirements.txt
 }
 
+# Function to download and unzip Microsoft Edge WebDriver
+function Download-AndUnzip-EdgeDriver {
+    # Check if Edge is installed
+    $EdgeExePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+    if (-not (Test-Path $EdgeExePath)) {
+        Write-Host "Microsoft Edge is not installed, please install it and start again." -ForegroundColor Red
+        return
+    }
+
+    $DriverVersion = (Get-Item $EdgeExePath).VersionInfo.ProductVersion
+    $EdgeDriverUrl = "https://msedgedriver.azureedge.net/$DriverVersion/edgedriver_win64.zip"
+    $DriverZipPath = $DesktopPath\Drivers\edgedriver.zip
+
+    # Download Edge WebDriver
+    Invoke-WebRequest -Uri $EdgeDriverUrl -OutFile $DriverZipPath
+
+    # Unzip Edge WebDriver
+    Expand-Archive -Path $DriverZipPath -DestinationPath $DesktopPath\Drivers
+    Remove-Item $DriverZipPath  # Remove the downloaded ZIP file
+}
+
+# Set the working directory to the user's desktop
+Set-Location $DesktopPath
+
+# Download requirements.txt from GitHub
+$GitHubRequirementsUrl = "https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirements.txt"
+Invoke-WebRequest -Uri $GitHubRequirementsUrl -OutFile "$DesktopPath\requirements.txt"
+
+# Check if Python is installed
+if (-not (Get-Command python)) {
+    Write-Host "Python is not installed, please install Python and start again." -ForegroundColor Red
+} else {
+    Install-PythonPackages
+    Download-AndUnzip-EdgeDriver
+}
+
+# Provide a message to the user for running the script
+Write-Host "You can now run Rewards For Two.py." -ForegroundColor Green
