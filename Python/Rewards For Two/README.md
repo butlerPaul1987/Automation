@@ -1,49 +1,59 @@
-# Python-Creations
+# Microsoft Rewards Automation Script
 
-## MicrosoftRewardsForTwoAccounts.py
-Just an easy way to get 90 points for MicrosoftRewards, this will perform the following options:
----
-1. Open up Bing using a web browser 
-2. ForEach user selected (there can be as many as you'd like, although I can see limitations with larger numbers)
-3. There is a search using a JSON website search (30 words returned)
-5. It will log on with a username and password
-4. For each of the items returned it will perform a search 
-6. It will output a comment on a document which will document the following:
-	```	
-	Today	 : The date in American format
-	UserName : The email being used
-	EndPoints: This is the points after all searches
-	Sum      : This is the total sum of points gained today.
-	```
-```python
-Sum = int(EndPoints) - int(StartPoints)
-Output = f"[{today}]: '{user}' has {EndPoints} points [Up {Sum} points]"
-```
+## Overview
 
-After each session it will close and restart the session.
+This Python script is designed to automate Microsoft Rewards activities, such as daily searches and completing daily sets, for two user accounts. It uses the Selenium library for web automation.
 
-You'll need to run (in order): 
-1. Open preferred CLI (Powershell/CMD) and run: 
-```powershell
-Set-Location "C:\Users\$env:username\Desktop\" 
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/butlerPaul1987/Automation/main/Python/Rewards%20For%20Two/Requirments.txt" -OutFile requirements.txt
-```
-3. When this has downloaded run ```py -m pip install -r requirements.txt``` 
-4. Then run the next sequence of commands:
-- Download WebDriver / create directory: 
-```powershell
-if(!(Test-Path "C:\Users\$env:username\Desktop\Drivers\")){ 
-	New-Item -Path "C:\Users\$env:username\Desktop\Drivers\" -ItemType Directory | Out-Null 
-}  
-Invoke-WebRequest -Uri "https://msedgedriver.azureedge.net/96.0.1054.62/edgedriver_win64.zip" -OutFile .\Drivers\edgedriver.zip
-```
-- Unzip webdriver: 
-```powershell
-Expand-Archive -Path .\Drivers\edgedriver.zip -DestinationPath "C:\Users\$env:username\Desktop\Drivers\"
-```
+### Author
 
-### Alternatively run Install.ps1 ;)
+- Author: Paul Butler
+- Date: 24/09/2023
 
+## Prerequisites
 
+Before using the script, ensure you have the following prerequisites:
 
+1. Python installed on your system.
+2. Selenium library installed. You can install it using `pip install selenium`.
+3. Microsoft Edge browser installed.
+4. Microsoft Edge WebDriver (msedgedriver.exe) placed in a directory and referenced in the script.
+
+## Instructions
+
+1. **Script Configuration**:
+
+   - Open the script using a text editor or Python IDE.
+   - Modify the `AccountEmail` and `AccountPword` lists with the email addresses and passwords for your Microsoft Rewards accounts.
+   - Adjust the `RTime` list to specify random search time intervals in seconds.
+   - Set the path for the `Rewards.txt` file where the script will log the results.
+
+2. **Webdriver Configuration**:
+
+   - Ensure the script is configured to use the Microsoft Edge browser. Update the paths to the Edge browser executable and WebDriver if necessary.
+
+3. **Running the Script**:
+
+   - Save your changes to the script.
+   - Open a terminal or command prompt.
+   - Navigate to the directory where the script is located.
+   - Run the script using the command: `python script_name.py` (replace `script_name.py` with the actual script filename).
+
+4. **Script Execution**:
+
+   - The script will open Microsoft Edge and automate the login process for each user account.
+   - It will perform searches on random words and log the start and end points.
+   - The script will then complete the daily sets and log the points earned.
+   - The results will be logged in the specified `Rewards.txt` file.
+
+5. **Logging**:
+
+   - The script will log the results for each account with a timestamp in the `Rewards.txt` file.
+   - A separator line is added to separate results for different runs.
+
+## Notes
+
+- Ensure you have a stable internet connection while running the script.
+- Microsoft may update its website structure, which could break the script. Check for script updates or make necessary adjustments if this happens.
+
+By following these instructions, you can automate Microsoft Rewards activities for your accounts using the provided Python script.
 
