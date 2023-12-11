@@ -5,12 +5,12 @@
 # Date:     19/07/2023 @ 16:48
 
 #@
-#@ USAGE: 
+#@ USAGE:
 #@       ./postgres-ctrl.sh ACTION SETTING [RESTOREFILE]
 #@
-#@ BACKUP EXAMPLE: 
+#@ BACKUP EXAMPLE:
 #@       ./postgres-ctrl.sh --option backup --host cyient --port 5432
-#@ RESTORE EXAMPLE: 
+#@ RESTORE EXAMPLE:
 #@       ./postgres-ctrl.sh --option restore --host cyient --port 5432 --restore-file /var/backups/postgresql/backup.sql
 #@
 #@ ACTION
@@ -94,5 +94,6 @@ elif [[ $SET_OPTION = "restore" ]]; then
 
 # else ask for valid selection
 else
-    printf "Please select a valid option: ${INFO}[BACKUP]${NC}, ${INFO}[ALL-HOST-BACKUP]${NC} OR ${INFO}[RESTORE]${NC}\n"
+    #printf "Please select a valid option:\n ${INFO}[BACKUP]${NC}\n ${INFO}[ALL-HOST-BACKUP]${NC}\n ${INFO}[RESTORE]${NC}\n ${INFO}[HELP]${NC}\n"
+    Usage
 fi
