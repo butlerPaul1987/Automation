@@ -6,7 +6,7 @@
 
 # Sets the hour variable and command to run 
 HOUR=$(date +"%H")
-CMD=$(cat /var/log/apache2/toobmgt_access.log | grep '/heartbeat/probe.php HTTP/1.1" 403 487' | awk ' $4 > "16:00:00"' | awk '{print $1}' | sort | uniq | wc -l)
+CMD=$(cat /var/log/apache2/toobmgt_access.log | grep '/heartbeat/probe.php HTTP/1.1" 403 487' | awk '{print $1}' | sort | uniq | wc -l)
 
 # if the CMD variable returns nothing, then set STATUS to normal 
 # if the CMD variable returns results set STATUS to WARNING
