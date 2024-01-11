@@ -134,7 +134,7 @@ if [[ $SET_OPTION = "backup" ]]; then
     # Compress the backup
     printf "[${INFO}-${NC}]: Compressing backup\n"
     LOGTIME=$(date '+%b %d %T')
-    echo "$LOGTIME: Archiving $BACKFILE..." >> $FILE
+    echo "$LOGTIME: Archiving $BACKFILE ..." >> $FILE
 
     /bin/bzip2 -v $BACKFILE  # this can be slow
     RESULT=$?
