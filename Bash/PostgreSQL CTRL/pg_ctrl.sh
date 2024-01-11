@@ -27,7 +27,7 @@
 #@  -rf|--restore-file                 Set restore file i.e. /var/backups/postgresql/backup.sql
 #@
 #@
-#@ LOG FIE GENERATED:                 /var/backups/postgresql/$DATE_HOST.log
+#@ LOG FIE GENERATED:                 /var/backups/postgresql/${HOST}-${DATETIME}.log
 
 # - printf colour sets
 WARNING='\033[1;31m'
@@ -112,29 +112,58 @@ printf "[${SUCCESS}+${NC}]: Complete\n"
 # Backup Process
 if [[ $SET_OPTION = "backup" ]]; then
     printf "[${INFO}-${NC}]: Creating backup\n"
-    echo '[$DATETIME]: Starting Backup...'> $FILE 2>&1
-    /usr/bin/pg_dumpall --host $SET_HOST --username $SET_USER --database 'postgres' --verbose --clean -f $BACKFILE > $FILE 2>&1 
+    LOGTIME=$(date '+%b %d %T')
+    echo "$LOGTIME: PGDUMP -> $BACKFILE" > $FILE
+    /usr/bin/pg_dumpall --host $SET_HOST --username $SET_USER --database 'postgres' --verbose --clean -f $BACKFILE
+    # Perform check
     RESULT=$?
     if [ $RESULT -eq 0 ]; then
+      # session variables
+      LOGTIME=$(date '+%b %d %T')
+      SIZE=$(ls -al $BACKFILE | awk '{print $5}')
+      echo "$LOGTIME: OK - PGDUMP -> $BACKFILE Size=$SIZE" >> $FILE
+      
       printf "[${SUCCESS}+${NC}]: Complete\n"
     else
+      LOGTIME=$(date '+%b %d %T')
+      SIZE=$(ls -al $BACKFILE | awk '{print $5}')
+      echo "$LOGTIME: FAIL - PGDUMP -> $BACKFILE Size=" >> $FILE
       printf "[${WARNING}@${NC}]: Failed\n"
     fi
 
     # Compress the backup
     printf "[${INFO}-${NC}]: Compressing backup\n"
-    /bin/bzip2 $BACKFILE  # this can be slow
+    LOGTIME=$(date '+%b %d %T')
+    echo "$LOGTIME: Archiving $BACKFILE..." >> $FILE
+
+    /bin/bzip2 -v $BACKFILE  # this can be slow
     RESULT=$?
     if [ $RESULT -eq 0 ]; then
+      LOGTIME=$(date '+%b %d %T')
+      NEWBACKFILE="$BACKFILE.bz2"
+      SIZE=$(ls -al $NEWBACKFILE | awk '{print $5}')
+      echo "$LOGTIME: OK - Created -> $NEWBACKFILE Size=$SIZE" >> $FILE
       printf "[${SUCCESS}+${NC}]: Complete\n"
     else
+      LOGTIME=$(date '+%b %d %T')
+      echo "$LOGTIME: FAIL - PGDUMP Failed!" >> $FILE
       printf "[${WARNING}@${NC}]: Failed\n"
     fi
 
 # Restore Process:
 elif [[ $SET_OPTION = "restore" ]]; then
     printf "[${INFO}-${NC}]: Creating restore with file: $SET_RESTORE_FILE\n"
-    /usr/bin/psql -U $SET_USER -h $SET_HOST -p $SET_PORT < $SET_RESTORE_FILE
+    /bin/bzip2 -dkf $SET_RESTORE_FILE
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+      printf "[${SUCCESS}+${NC}]: Complete\n"
+    else
+      printf "[${WARNING}@${NC}]: Failed\n"
+    fi
+
+    # can probably be better coded, unsure how.. will ask Bjorn :)
+    RESTORE_FILE=${SET_RESTORE_FILE::-4}
+    /usr/bin/psql -U $SET_USER -h $SET_HOST -p $SET_PORT < $RESTORE_FILE
     RESULT=$?
     if [ $RESULT -eq 0 ]; then
       printf "[${SUCCESS}+${NC}]: Complete\n"
