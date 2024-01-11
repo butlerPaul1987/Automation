@@ -3,6 +3,7 @@
 # By:       PButler
 # Title:    postgres-ctrl.sh
 # Date:     19/07/2023 @ 16:48
+# Version:  v1.0 - Initial Build
 
 #@
 #@ USAGE:
@@ -25,18 +26,36 @@
 #@ RESTOREFILE
 #@  -rf|--restore-file                 Set restore file i.e. /var/backups/postgresql/backup.sql
 #@
+#@
+#@ LOG FIE GENERATED:                 /var/backups/postgresql/$DATE_HOST.log
 
-Usage(){
-cat $0 | grep '^#@' | sed -e 's/^#@//g'
-echo -e "$*\n"
-return 0
-}
-
-# - printf colours
+# - printf colour sets
 WARNING='\033[1;31m'
 SUCCESS='\033[1;32m'
 INFO='\033[1;33m'
-NC='\033[0m' # No Colour
+
+# banner colours
+LCYAN='\033[1;36m'  # Cyan
+MAGEN='\033[1;35m'  # Magenta
+NC='\033[0m'        # No Colour
+
+# functions
+Usage(){
+    cat $0 | grep '^#@' | sed -e 's/^#@//g'
+    echo -e "$*\n"
+    return 0
+}
+
+banner(){
+    printf "
+    ${LCYAN}██████╗ ${MAGEN} ██████╗       ${LCYAN} ██████╗████████╗██████╗ ██╗
+    ${LCYAN}██╔══██╗${MAGEN}██╔════╝       ${LCYAN}██╔════╝╚══██╔══╝██╔══██╗██║
+    ${LCYAN}██████╔╝${MAGEN}██║  ███╗█████╗${LCYAN}██║        ██║   ██████╔╝██║
+    ${LCYAN}██╔═══╝ ${MAGEN}██║   ██║╚════╝${LCYAN}██║        ██║   ██╔══██╗██║
+    ${LCYAN}██║     ${MAGEN}╚██████╔╝      ${LCYAN}╚██████╗   ██║   ██║  ██║███████╗
+    ${LCYAN}╚═╝     ${MAGEN} ╚═════╝       ${LCYAN} ╚═════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝${NC}
+    \n"
+}
 
 # Set vars up
 SET_OPTION=
@@ -46,9 +65,9 @@ SET_PORT=
 SET_RESTORE_FILE=
 SET_USER=
 
-# Check for missing directory/ .pgpass file/...
-! test -d "/var/backups/postgresql" && echo "Missing directory /var/backups/postgresql" && exit 1
-! test -f "/root/.pgpass" && echo "Missing .pgpass file - passwordless access won't work" && exit 1
+# Check for missing directory / .pgpass file
+! test -d "/var/backups/postgresql" && banner && echo "Missing directory /var/backups/postgresql - please create" && exit 1
+! test -f "/root/.pgpass" && banner && echo "Missing .pgpass file - passwordless access will not work" && exit 1
 
 while [ ! -z "$1" ]; do
   case $1 in
@@ -83,17 +102,47 @@ done
 
 
 # Let's create some functions
+banner
+printf "[${INFO}-${NC}]: Adding data into variables\n"
 DATETIME=$(date +%Y%m%j%H%M)
 BACKFILE="/var/backups/postgresql/pgdump-${SET_HOST}-${DATETIME}.sql"
+FILE="/var/backups/postgresql/${SET_HOST}-${DATETIME}.log"
+printf "[${SUCCESS}+${NC}]: Complete\n"
+
 # Backup Process
 if [[ $SET_OPTION = "backup" ]]; then
-    pg_dumpall --host $SET_HOST --username $SET_USER --database 'postgres' --verbose --clean -f $BACKFILE
+    printf "[${INFO}-${NC}]: Creating backup\n"
+    echo '[$DATETIME]: Starting Backup...'> $FILE 2>&1
+    /usr/bin/pg_dumpall --host $SET_HOST --username $SET_USER --database 'postgres' --verbose --clean -f $BACKFILE > $FILE 2>&1 
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+      printf "[${SUCCESS}+${NC}]: Complete\n"
+    else
+      printf "[${WARNING}@${NC}]: Failed\n"
+    fi
+
+    # Compress the backup
+    printf "[${INFO}-${NC}]: Compressing backup\n"
+    /bin/bzip2 $BACKFILE  # this can be slow
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+      printf "[${SUCCESS}+${NC}]: Complete\n"
+    else
+      printf "[${WARNING}@${NC}]: Failed\n"
+    fi
+
 # Restore Process:
 elif [[ $SET_OPTION = "restore" ]]; then
-    psql -U $SET_USER -h $SET_HOST -p $SET_PORT < $SET_RESTORE_FILE
+    printf "[${INFO}-${NC}]: Creating restore with file: $SET_RESTORE_FILE\n"
+    /usr/bin/psql -U $SET_USER -h $SET_HOST -p $SET_PORT < $SET_RESTORE_FILE
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+      printf "[${SUCCESS}+${NC}]: Complete\n"
+    else
+      printf "[${WARNING}@${NC}]: Failed\n"
+    fi
 
 # else ask for valid selection
 else
-    #printf "Please select a valid option:\n ${INFO}[BACKUP]${NC}\n ${INFO}[ALL-HOST-BACKUP]${NC}\n ${INFO}[RESTORE]${NC}\n ${INFO}[HELP]${NC}\n"
     Usage
 fi
