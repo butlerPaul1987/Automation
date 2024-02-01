@@ -10,12 +10,12 @@
 
 ### **REFERENCES**
 ``` ini
-	[Notes below followed this]:
-		https://tecadmin.net/setup-ip-failover-on-ubuntu-with-keepalived/
+[Notes below followed this]:
+	https://tecadmin.net/setup-ip-failover-on-ubuntu-with-keepalived/
 		
-	[OTHER]
-		https://www.redhat.com/sysadmin/keepalived-basics
-		https://packetpushers.net/vrrp-linux-using-keepalived-2/
+[OTHER]
+	https://www.redhat.com/sysadmin/keepalived-basics
+	https://packetpushers.net/vrrp-linux-using-keepalived-2/
 ```
 # Process:
 Step 1 – Install Required Packages
@@ -55,7 +55,7 @@ vrrp_instance VI_1 {
 	auth_pass hbHB788       # Must match across both servers
 	}
 virtual_ipaddress {
-		192.168.10.50       # change to the required VIP
+		192.168.10.50  	# change to the required VIP
 	}
 }
 #### CONFIG FILE END ####
