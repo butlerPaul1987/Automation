@@ -9,3 +9,5 @@ This was created to check the status of a node to see which host has the virtual
 This was created to Monitored to see if files have synced across both node instances
 ### 4. mems_node.sh
 This was created to check the Apache access logs to see if additional traffic manager IP ranges were being used we had not white listed.
+### 4. html_output.sh
+This was created to check the a variable list of services out output them to an Apache2 instance.
