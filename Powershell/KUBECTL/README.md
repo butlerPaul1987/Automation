@@ -32,7 +32,7 @@ pod-name-3
 1. Namespace Access Check: Verifies access to the specified namespace before proceeding.
 2. Pod Restart: Restarts each pod listed in the input file.
 3. Error Handling: Provides clear error messages for common issues (e.g., namespace access, file not found).
-4. Colored Output: Uses color-coded console output for better readability.
+4. coloured Output: Uses colour-coded console output for better readability.
 
 ## Functions
 ```Test-NamespaceAccess```
