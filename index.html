@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JMCars - Drive Your Dream</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .text-red-500 { color: #d51811 !important; }
+    .bg-red-600 { background-color: #d51811 !important; }
+    .hover\:bg-red-700:hover { background-color: #a2140d !important; }
+    .hover\:shadow-red-600:hover { box-shadow: 0 0 10px #d51811 !important; }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;  /* IE/Edge */
+      scrollbar-width: none;     /* Firefox */
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center p-6 bg-black shadow-lg">
+    <div><img src="images/logo.png" alt="JMCars Logo" class="h-20 w-auto"></div>
+    <nav class="space-x-6 text-lg font-medium">
+      <a href="#" class="hover:text-red-500">Home</a>
+      <a href="#cars" class="hover:text-red-500">Cars</a>
+      <a href="#why-us" class="hover:text-red-500">Why Us</a>
+      <a href="#contact" class="hover:text-red-500">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="h-[70vh] bg-cover bg-center relative" style="background-image: url('images/logo.png');">
+    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center text-center px-6">
+      <div>
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">Drive Your Dream</h1>
+        <p class="mb-6 text-base md:text-lg text-gray-300">Explore our premium lineup of vehicles</p>
+        <a href="#cars" class="bg-red-600 hover:bg-red-700 transition px-6 py-3 rounded text-white font-semibold">Browse Cars</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose -->
+  <section id="why-us" class="py-16 px-6 bg-gradient-to-b from-black via-gray-900 to-black text-white">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6 text-[#d51811]">Why Choose JMCARS</h2>
+      <p class="mb-12 text-gray-300">Trusted by thousands for performance, reliability, and service excellence.</p>
+
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div><h3 class="text-xl font-semibold mb-2">Unmatched Variety</h3><p class="text-gray-400">From sports models to eco-friendly vehicles, we’ve got every driver covered.</p></div>
+        <div><h3 class="text-xl font-semibold mb-2">Financing Made Simple</h3><p class="text-gray-400">Flexible plans tailored to your needs — no hidden fees, no surprises.</p></div>
+        <div><h3 class="text-xl font-semibold mb-2">Aftercare Excellence</h3><p class="text-gray-400">Servicing, warranties, and ongoing support — all handled in-house.</p></div>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory">
+        <div class="flex space-x-6 pb-6">
+          <div class="min-w-[300px] bg-gray-800 rounded-lg p-6 shadow-lg flex-shrink-0 snap-center">
+            <p class="text-gray-300 italic mb-4">"I bought my Audi A5 from JMCARS, and the service was absolutely incredible. The team went above and beyond."</p>
+            <div class="text-sm text-gray-400">— <span class="font-semibold text-white">Sophie L.</span>, London</div>
+          </div>
+          <div class="min-w-[300px] bg-gray-800 rounded-lg p-6 shadow-lg flex-shrink-0 snap-center">
+            <p class="text-gray-300 italic mb-4">"It was my first time financing a car and they explained everything clearly. Highly recommend them!"</p>
+            <div class="text-sm text-gray-400">— <span class="font-semibold text-white">Jason M.</span>, Birmingham</div>
+          </div>
+          <div class="min-w-[300px] bg-gray-800 rounded-lg p-6 shadow-lg flex-shrink-0 snap-center">
+            <p class="text-gray-300 italic mb-4">"Excellent range of cars and a no-pressure sales team. I'm absolutely thrilled with my new BMW."</p>
+            <div class="text-sm text-gray-400">— <span class="font-semibold text-white">Ayesha K.</span>, Manchester</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cars -->
+  <section id="cars" class="py-16 bg-black px-6">
+    <h2 class="text-3xl font-bold text-center mb-10 text-[#d51811]">Our Featured Cars</h2>
+    <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory">
+      <div class="flex space-x-6 max-w-full pb-4 h-[30rem]">
+
+        <!-- Car 1 -->
+        <div class="min-w-[280px] max-w-[280px] bg-gray-800 rounded-lg shadow hover:shadow-[#d51811] transition flex-shrink-0 snap-center">
+          <img src="images/Cars/1/main.jpg" alt="Audi A5" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-1">Audi A5</h3>
+            <p class="text-md text-red-400 mb-1">2023</p>
+            <p class="text-sm text-gray-400 mb-2">Sleek, powerful, and packed with premium features.</p>
+            <p class="text-[#d51811] font-bold text-lg">£35,990</p>
+            <button 
+              id="openModal-1"
+              type="button"
+              class="bg-red-600 hover:bg-red-700 transition px-6 py-3 rounded text-white font-semibold mt-4 block text-center"
+            >
+              Enquire
+            </button>
+          </div>
+        </div>
+
+        <!-- Car 1 Modal -->
+        <!-- Modal: Hidden by default -->
+        <div id="enquireModal-1" class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center hidden">
+          <div class="bg-white rounded-lg p-8 w-full max-w-[90vw] max-h-[90vh] overflow-y-auto relative shadow-xl">
+            <button id="modalClose-1" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl">&times;</button>
+            <div class="flex overflow-x-auto space-x-2 mb-4">
+              <img src="images/Cars/1/main.jpg" alt="Audi A5 Image 1" class="w-full h-64 object-cover rounded mb-2">
+              <img src="images/Cars/1/2.jpg" alt="Audi A5 Image 2" class="w-full h-64 object-cover rounded mb-2">
+              <img src="images/Cars/1/3.jpg" alt="Audi A5 Image 3" class="w-full h-64 object-cover rounded mb-2">
+              <img src="images/Cars/1/4.jpg" alt="Audi A5 Image 4" class="w-full h-64 object-cover rounded mb-2">
+            </div>
+            <h2 class="text-xl font-bold mb-4 text-gray-800">More About the Audi A5</h2>
+            
+            <!-- CAR DETAILS AS BUTTONS or BADGES -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Mileage: 14,800 mi</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Fuel: Petrol</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Transmission: Automatic</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Colour: Red</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Brand: Audi</span>
+            </div>
+            <a href="#contact" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold block text-center">Contact Us</a>
+          </div>
+        </div>
+
+        <!-- Car 2 - SOLD -->
+        <div class="relative min-w-[280px] max-w-[280px] bg-gray-800 rounded-lg shadow hover:shadow-[#d51811] transition flex-shrink-0 snap-center overflow-hidden">
+          <img src="images/Cars/2/main.jpg" alt="BMW 3 Series" class="w-full h-48 object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+          <div class="absolute top-2 left-2 bg-[#d51811] text-white text-xs font-bold px-3 py-1 rounded z-20 shadow-md">SOLD</div>
+          <div class="p-4 relative z-20">
+            <h3 class="text-lg font-semibold mb-1">BMW 3 Series</h3>
+            <p class="text-md text-red-400 mb-1">2025</p>
+            <p class="text-sm text-gray-400 mb-2">Balance of performance and executive class.</p>
+            <p class="text-[#d51811] font-bold text-lg line-through opacity-70">£32,450</p>
+          </div>
+        </div>
+
+        <!-- Car 3 -->
+        <div class="min-w-[280px] max-w-[280px] bg-gray-800 rounded-lg shadow hover:shadow-[#d51811] transition flex-shrink-0 snap-center">
+          <img src="images/Cars/3/main.jpg" alt="Audi Q5" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-1">Mercedes Q5</h3>
+            <p class="text-md text-red-400 mb-1">2019</p>
+            <p class="text-sm text-gray-400 mb-2">Refined interior, AWD, and smart tech.</p>
+            <p class="text-[#d51811] font-bold text-lg">£40,250</p>
+            <button 
+              id="openModal-3"
+              type="button"
+              class="bg-red-600 hover:bg-red-700 transition px-6 py-3 rounded text-white font-semibold mt-4 block text-center"
+            >
+              Enquire
+            </button>
+          </div>
+        </div>
+
+        <!-- Car 3 Modal -->
+        <!-- Modal: Hidden by default -->
+        <div id="enquireModal-3" class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center hidden">
+          <div class="bg-white rounded-lg p-8 w-full max-w-[90vw] max-h-[90vh] overflow-y-auto relative shadow-xl">
+            <button id="modalClose-3" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl">&times;</button>
+            <div class="flex overflow-x-auto space-x-2 mb-4">
+              <img src="images/Cars/3/main.jpg" alt="Audi A5 Image 1" class="w-full h-64 object-cover rounded mb-2">
+              <img src="images/Cars/3/2.jpg" alt="Audi Q5 Image 2" class="w-full h-64 object-cover rounded mb-2">
+              <img src="images/Cars/3/3.jpg" alt="Audi Q5 Image 3" class="w-full h-64 object-cover rounded mb-2">
+              <img src="images/Cars/3/4.jpg" alt="Audi Q5 Image 4" class="w-full h-64 object-cover rounded mb-2">
+            </div>
+            <h2 class="text-xl font-bold mb-4 text-gray-800">More About the Audi Q5</h2>
+            
+            <!-- CAR DETAILS AS BUTTONS or BADGES -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Mileage: 18,800 mi</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Fuel: Diesel</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Transmission: Automatic</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Colour: Blue</span>
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Brand: Audi</span>
+            </div>
+            <a href="#contact" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold block text-center">Contact Us</a>
+          </div>
+        </div>
+
+        <!-- Car 4 -->
+        <div class="relative min-w-[280px] max-w-[280px] bg-gray-800 rounded-lg shadow hover:shadow-[#d51811] transition flex-shrink-0 snap-center overflow-hidden">
+          <img src="images/Cars/4/main.jpg" alt="BMW 3 Series" class="w-full h-48 object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+          <div class="absolute top-2 left-2 bg-[#d51811] text-white text-xs font-bold px-3 py-1 rounded z-20 shadow-md">BEING PROCESSED</div>
+          <div class="p-4 relative z-20">
+            <h3 class="text-lg font-semibold mb-1">Mercedes EQB</h3>
+            <p class="text-md text-red-400 mb-1">2025</p>
+            <p class="text-sm text-gray-400 mb-2">Balance of performance and executive class.</p>
+            <p class="text-[#d51811] font-bold text-lg line-through opacity-70">£32,450</p>
+          </div>
+        </div>
+
+        <!-- Car 5 -->
+        <div class="min-w-[280px] max-w-[280px] bg-gray-800 rounded-lg shadow hover:shadow-[#d51811] transition flex-shrink-0 snap-center">
+          <img src="images/Cars/5/main.jpg" alt="Audi Q5" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-1">Audi Q5</h3>
+            <p class="text-md text-red-400 mb-1">2023</p>
+            <p class="text-sm text-gray-400 mb-2">Refined interior, AWD, and smart tech.</p>
+            <p class="text-[#d51811] font-bold text-lg">£40,250</p>
+          </div>
+        </div>
+
+        <!-- Car 6 -->
+        <div class="min-w-[280px] max-w-[280px] bg-gray-800 rounded-lg shadow hover:shadow-[#d51811] transition flex-shrink-0 snap-center">
+          <img src="images/Cars/6/main.jpg" alt="Audi Q5" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-1">BMW 3 Series</h3>
+            <p class="text-md text-red-400 mb-1">2023</p>
+            <p class="text-sm text-gray-400 mb-2">Balance of performance and executive class.</p>
+            <p class="text-[#d51811] font-bold text-lg line-through opacity-70">£35,250</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / CTA -->
+  <section id="contact" class="bg-gradient-to-b from-black via-gray-900 to-black py-20 px-6 text-white">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[#d51811]">Ready to Drive Your Dream Car?</h2>
+      <p class="text-gray-300 mb-8 text-lg max-w-2xl mx-auto">Reach out today or book a test drive. Our team is here to help you make the perfect choice.</p>
+      
+      <!-- Trustpilot -->
+      <div class="flex justify-center items-center mb-8">
+        <img src="images/trustpilot-logo.png" alt="Trustpilot Rating" class="h-10 mr-3">
+        <div class="text-left">
+          <p class="text-sm text-gray-400">Rated <span class="text-green-400 font-bold">4.8 / 5</span> on Trustpilot</p>
+          <div class="flex">
+            <!-- 5 Stars -->
+            <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="..."/></svg>
+            <!-- Repeat star SVG 5x -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <a href="mailto:sales@jmcars.com" class="bg-[#d51811] hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition">Contact Sales</a>
+        <a href="#cars" class="border border-[#d51811] text-[#d51811] hover:bg-[#d51811] hover:text-white font-semibold py-3 px-6 rounded-lg transition">Browse Cars</a>
+      </div>
+
+      <p class="text-sm text-gray-500 mt-6">Prefer to talk? Call us now: <span class="text-white font-medium">01234 567 890</span></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white py-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 text-sm">
+      <p>&copy; 2025 JMCars. All rights reserved.</p>
+      <div class="flex space-x-4 mt-2 md:mt-0">
+        <a href="#" class="hover:text-red-500">Facebook</a>
+        <a href="#" class="hover:text-red-500">Instagram</a>
+        <a href="#" class="hover:text-red-500">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+<!--Javascript modal stuff -->
+<script>
+  // Car 1
+  const openModalBtn1 = document.getElementById('openModal-1');
+  const modal1 = document.getElementById('enquireModal-1');
+  const closeModalBtn1 = document.getElementById('modalClose-1');
+
+  openModalBtn1.addEventListener('click', () => {
+    modal1.classList.remove('hidden');
+  });
+
+  closeModalBtn1.addEventListener('click', () => {
+    modal1.classList.add('hidden');
+  });
+
+  modal1.addEventListener('click', function (e) {
+    if (e.target === modal1) {
+      modal1.classList.add('hidden');
+    }
+  });
+
+  // Car 3
+  const openModalBtn3 = document.getElementById('openModal-3');
+  const modal3 = document.getElementById('enquireModal-3');
+  const closeModalBtn3 = document.getElementById('modalClose-3');
+
+  openModalBtn3.addEventListener('click', () => {
+    modal3.classList.remove('hidden');
+  });
+
+  closeModalBtn3.addEventListener('click', () => {
+    modal3.classList.add('hidden');
+  });
+
+  modal3.addEventListener('click', function (e) {
+    if (e.target === modal3) {
+      modal3.classList.add('hidden');
+    }
+  });
+</script>
+</body>
+</html>
