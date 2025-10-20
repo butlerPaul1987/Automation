@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Lacrosse Ball Piriformis",
+    "category": "Warm up",
+    "description": "Lacrosse Ball Piriformis - Mobility",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Incline Bench Press",
+    "category": "Warm up",
+    "description": "Roll Back into V-sit - Mobility",
+    "is_competition_lift": false
+  },
+  {
+    "name": "X band walk forward and backwards",
+    "category": "Mobility",
+    "description": "X band walk forward and backwards",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Banded Terminal Knee Extensions",
+    "category": "Mobility",
+    "description": "Banded Terminal Knee Extensions",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Rowing Machine Adductor Slides",
+    "category": "Mobility",
+    "description": "Rowing Machine Adductor Slides",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Glute Ham Raises",
+    "category": "Wenning Warm Up Lower Body Exercises",
+    "description": "Glute Ham Raises",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Leg Extensions",
+    "category": "Wenning Warm Up Lower Body Exercises",
+    "description": "Leg Extensions",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Conventional Deadlift (deadlift bar)",
+    "category": "Deadlift and Derivatives",
+    "description": "Conventional Deadlift (deadlift bar)",
+    "is_competition_lift": true
+  },
+  {
+    "name": "Free Squat with Bow Bar",
+    "category": "Squats and Derivatives",
+    "description": "Free Squat with Bow Bar",
+    "is_competition_lift": true
+  },
+  {
+    "name": "Chest Supported T bar Rows",
+    "category": "Horizontal Pull",
+    "description": "Chest Supported T bar Rows",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Bench press (comp grip)",
+    "category": "Bench Press and Derivatives",
+    "description": "Bench press (comp grip)",
+    "is_competition_lift": true
+  },
+  {
+    "name": "Board Press - 4 board",
+    "category": "Bench Press and Derivatives",
+    "description": "Board Press - 3 board",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Board Press - 3 board",
+    "category": "Bench Press and Derivatives",
+    "description": "Board Press - 3 board",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Board Press - 2 board",
+    "category": "Bench Press and Derivatives",
+    "description": "Board Press - 3 board",
+    "is_competition_lift": false
+  },
+  {
+    "name": "Board Press - 1 board",
+    "category": "Bench Press and Derivatives",
+    "description": "Board Press - 3 board",
+    "is_competition_lift": false
+  }
+]

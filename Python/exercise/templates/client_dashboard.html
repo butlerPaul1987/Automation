@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="nav-tabs">
+    <a href="{{ url_for('client_dashboard') }}" class="nav-tab active">Dashboard</a>
+    <a href="{{ url_for('client_programs') }}" class="nav-tab">My Programs</a>
+    <a href="{{ url_for('client_workouts') }}" class="nav-tab">Workout History</a>
+    <a href="{{ url_for('messages') }}" class="nav-tab">Contact Coach</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Total Workouts</div>
+        <div class="stat-value">{{ total_workouts }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">This Week</div>
+        <div class="stat-value">{{ workouts_this_week }}</div>
+    </div>
+    {% for lift, weight in current_1rms.items() %}
+    <div class="stat-card">
+        <div class="stat-label">{{ lift }} 1RM</div>
+        <div class="stat-value">{{ weight }}kg</div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card">
+    <h3 class="card-header">Today's Training</h3>
+    {% if today_workouts %}
+    {% for item in today_workouts %}
+    <div class="program-item">
+        <div class="workout-header">
+            <div>
+                <div class="workout-name">{{ item.program.name }}</div>
+                <div style="color:#999;font-size:.9em">{{ item.workout.name }}</div>
+            </div>
+            <a href="{{ url_for('start_workout', program_workout_id=item.workout.id) }}" class="btn btn-success btn-small">Start Workout</a>
+        </div>
+        <ul class="exercise-list" style="margin-top:15px">
+            {% for ex in item.workout.exercises|sort(attribute='order') %}
+            <li class="exercise-list-item">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <strong>{{ ex.exercise.name }}</strong>
+                        <div style="color:#999;font-size:.85em">{{ ex.sets }} sets × {{ ex.reps }} reps</div>
+                        {% if ex.notes %}
+                        <div style="color:#aaa;font-size:.85em;margin-top:5px">{{ ex.notes }}</div>
+                        {% endif %}
+                    </div>
+                    {% if ex.exercise.video_url %}
+                    <a href="{{ ex.exercise.video_url }}" target="_blank" class="video-link">📹 Video</a>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="empty-state">
+        <p>No workouts scheduled for today. Rest day or contact your coach!</p>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3 class="card-header" onclick="toggleSection('recent-workouts')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        Recent Workouts
+        <span id="recent-workouts-icon">▼</span>
+    </h3>
+    <div id="recent-workouts" style="display:none">
+        {% if recent_workouts %}
+        {% for workout in recent_workouts %}
+        <div class="workout-item">
+            <div class="workout-header">
+                <span class="workout-name">{{ workout.exercise.name }}</span>
+                <span class="workout-date">{{ workout.date.strftime('%d %b %Y, %H:%M') }}</span>
+            </div>
+            <div class="workout-stats">
+                <div class="workout-stat">
+                    <span class="workout-stat-label">Sets</span>
+                    <span class="workout-stat-value">{{ workout.sets }}</span>
+                </div>
+                <div class="workout-stat">
+                    <span class="workout-stat-label">Reps</span>
+                    <span class="workout-stat-value">{{ workout.reps }}</span>
+                </div>
+                <div class="workout-stat">
+                    <span class="workout-stat-label">Weight</span>
+                    <span class="workout-stat-value">{{ workout.weight }}kg</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <p>No workouts logged yet</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const icon = document.getElementById(sectionId + '-icon');
+    
+    if (section.style.display === 'none') {
+        section.style.display = 'block';
+        icon.textContent = '▲';
+    } else {
+        section.style.display = 'none';
+        icon.textContent = '▼';
+    }
+}
+</script>
+
+{% if strength_data %}
+<div class="card">
+    <h3 class="card-header">Strength Progress - Estimated 1RM</h3>
+    <canvas id="strength-chart" width="400" height="300"></canvas>
+</div>
+
+<script>
+const colors = ['#d1312c', '#c9a532', '#28a745', '#17a2b8', '#6f42c1'];
+let datasets = [];
+let colorIndex = 0;
+
+{% for exercise_name, data in strength_data.items() %}
+let chartData{{ loop.index }} = [];
+let dates{{ loop.index }} = {{ data.dates | tojson }};
+let values{{ loop.index }} = {{ data.estimated_1rm | tojson }};
+for(let i = 0; i < dates{{ loop.index }}.length; i++) {
+    chartData{{ loop.index }}.push({x: dates{{ loop.index }}[i], y: values{{ loop.index }}[i]});
+}
+
+datasets.push({
+    label: '{{ exercise_name }}',
+    data: chartData{{ loop.index }},
+    borderColor: colors[colorIndex % colors.length],
+    backgroundColor: colors[colorIndex % colors.length] + '20',
+    tension: 0.1,
+    fill: false
+});
+colorIndex++;
+{% endfor %}
+
+// Get all unique dates and sort them
+let allDates = new Set();
+datasets.forEach(dataset => {
+    dataset.data.forEach(point => allDates.add(point.x));
+});
+let sortedDates = Array.from(allDates).sort();
+
+new Chart(document.getElementById('strength-chart'), {
+    type: 'line',
+    data: {
+        labels: sortedDates,
+        datasets: datasets.map(dataset => ({
+            ...dataset,
+            data: sortedDates.map(date => {
+                let point = dataset.data.find(p => p.x === date);
+                return point ? point.y : null;
+            })
+        }))
+    },
+    options: {
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false
+        },
+        plugins: {
+            legend: { labels: { color: '#fff' } }
+        },
+        scales: {
+            x: { 
+                ticks: { color: '#999' },
+                grid: { color: '#333' }
+            },
+            y: { 
+                ticks: { color: '#999' },
+                grid: { color: '#333' },
+                title: {
+                    display: true,
+                    text: 'Estimated 1RM (kg)',
+                    color: '#d1312c'
+                }
+            }
+        }
+    }
+});
+</script>
+{% endif %}
+{% endblock %}

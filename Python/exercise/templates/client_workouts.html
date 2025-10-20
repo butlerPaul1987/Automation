@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="nav-tabs">
+    <a href="{{ url_for('client_dashboard') }}" class="nav-tab">Dashboard</a>
+    <a href="{{ url_for('client_programs') }}" class="nav-tab">My Programs</a>
+    <a href="{{ url_for('client_workouts') }}" class="nav-tab active">Workout History</a>
+    <a href="{{ url_for('messages') }}" class="nav-tab">Contact Coach</a>
+</div>
+
+<div class="card">
+    <h3 class="card-header">Workout History</h3>
+    {% if workouts %}
+    {% for workout in workouts %}
+    <div class="workout-item">
+        <div class="workout-header">
+            <div>
+                <span class="workout-name">{{ workout.exercise.name }}</span>
+                {% if workout.exercise.is_competition_lift %}
+                <span class="category-badge" style="margin-left:10px">Competition Lift</span>
+                {% endif %}
+            </div>
+            <span class="workout-date">{{ workout.date.strftime('%d %b %Y, %H:%M') }}</span>
+        </div>
+        <div class="workout-stats">
+            <div class="workout-stat">
+                <span class="workout-stat-label">Sets</span>
+                <span class="workout-stat-value">{{ workout.sets }}</span>
+            </div>
+            <div class="workout-stat">
+                <span class="workout-stat-label">Reps</span>
+                <span class="workout-stat-value">{{ workout.reps }}</span>
+            </div>
+            <div class="workout-stat">
+                <span class="workout-stat-label">Weight</span>
+                <span class="workout-stat-value">{{ workout.weight }}kg</span>
+            </div>
+            <div class="workout-stat">
+                <span class="workout-stat-label">Volume</span>
+                <span class="workout-stat-value">{{ "%.0f"|format(workout.sets * workout.reps * workout.weight) }}kg</span>
+            </div>
+        </div>
+        {% if workout.notes %}
+        <div class="workout-notes">{{ workout.notes }}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="empty-state">
+        <p>No workouts logged yet</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

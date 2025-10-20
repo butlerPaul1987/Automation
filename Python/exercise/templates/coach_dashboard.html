@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="nav-tabs">
+    <a href="{{ url_for('coach_dashboard') }}" class="nav-tab active">Dashboard</a>
+    <a href="{{ url_for('coach_clients') }}" class="nav-tab">Clients</a>
+    <a href="{{ url_for('coach_programs') }}" class="nav-tab">Programs</a>
+    <a href="{{ url_for('coach_exercises') }}" class="nav-tab">Exercises</a>
+    <a href="{{ url_for('admin_panel') }}" class="nav-tab">Admin</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Total Clients</div>
+        <div class="stat-value">{{ clients|length }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Unread Messages</div>
+        <div class="stat-value">{{ unread_messages }}</div>
+    </div>
+</div>
+
+<div class="card">
+    <h3 class="card-header">Development Tools</h3>
+    <a href="{{ url_for('add_dummy_data') }}" class="btn btn-secondary">Add Dummy Strength Data</a>
+    <p style="color:#999;font-size:.85em;margin-top:10px">Adds sample bench/squat/deadlift data for testing charts</p>
+</div>
+
+<div class="card">
+    <h3 class="card-header">Recent Client Activity</h3>
+    {% if recent_workouts %}
+    {% for workout in recent_workouts %}
+    <div class="workout-item">
+        <div class="workout-header">
+            <div>
+                <span class="workout-name">{{ workout.user.username }} - {{ workout.exercise.name }}</span>
+                {% if workout.exercise.is_competition_lift %}
+                <span class="category-badge" style="margin-left:10px">Competition Lift</span>
+                {% endif %}
+            </div>
+            <span class="workout-date">{{ workout.date.strftime('%d %b %Y, %H:%M') }}</span>
+        </div>
+        <div class="workout-stats">
+            <div class="workout-stat">
+                <span class="workout-stat-label">Sets</span>
+                <span class="workout-stat-value">{{ workout.sets }}</span>
+            </div>
+            <div class="workout-stat">
+                <span class="workout-stat-label">Reps</span>
+                <span class="workout-stat-value">{{ workout.reps }}</span>
+            </div>
+            <div class="workout-stat">
+                <span class="workout-stat-label">Weight</span>
+                <span class="workout-stat-value">{{ workout.weight }}kg</span>
+            </div>
+        </div>
+        {% if workout.notes %}
+        <div class="workout-notes">{{ workout.notes }}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="empty-state">
+        <p>No recent activity</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

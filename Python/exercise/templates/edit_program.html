@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="nav-tabs">
+    <a href="{{ url_for('coach_programs') }}" class="nav-tab">← Back to Programs</a>
+</div>
+
+<div class="card">
+    <h3 class="card-header">{{ program.name }}</h3>
+    <p style="color:#999">{{ program.description }}</p>
+    
+    <h4 style="color:#d1312c;margin:20px 0 15px 0">Add Workout Day</h4>
+    <form method="POST" action="{{ url_for('add_workout', program_id=program.id) }}">
+        <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:10px;align-items:end">
+            <div class="form-group" style="margin:0">
+                <label>Day Number</label>
+                <input type="number" name="day_number" min="1" max="7" required>
+            </div>
+            <div class="form-group" style="margin:0">
+                <label>Workout Name</label>
+                <input type="text" name="name" placeholder="e.g. Upper Body" required>
+            </div>
+            <button type="submit" class="btn">Add Day</button>
+        </div>
+    </form>
+</div>
+
+{% for workout in workouts %}
+<div class="card">
+    <h4 class="card-header">Day {{ workout.day_number }}: {{ workout.name }}</h4>
+    
+    <form method="POST" action="{{ url_for('add_exercise_to_workout', workout_id=workout.id) }}">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:20px">
+            <div class="form-group" style="margin:0">
+                <label>Exercise</label>
+                <select name="exercise_id" required>
+                    <option value="">Select exercise...</option>
+                    {% for exercise in exercises %}
+                    <option value="{{ exercise.id }}">{{ exercise.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" style="margin:0">
+                <label>Sets</label>
+                <input type="number" name="sets" min="1" required>
+            </div>
+            <div class="form-group" style="margin:0">
+                <label>Reps</label>
+                <input type="number" name="reps" min="1" required>
+            </div>
+            <div class="form-group" style="margin:0">
+                <label>Order</label>
+                <input type="number" name="order" min="0" value="0">
+            </div>
+            <button type="submit" class="btn btn-small">Add</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <div class="form-group">
+                <label>Notes</label>
+                <input type="text" name="notes" placeholder="Optional notes">
+            </div>
+            <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                    <input type="checkbox" id="has_resistance" name="has_accommodating_resistance" style="width:auto">
+                    <label for="has_resistance" style="margin:0;color:#fff;text-transform:none">Accommodating Resistance</label>
+                </div>
+                <input type="text" name="accommodating_resistance_type" placeholder="e.g. Chains, Bands" style="display:none" id="resistance_type">
+            </div>
+        </div>
+    </form>
+    <script>
+    document.getElementById('has_resistance').addEventListener('change', function() {
+        document.getElementById('resistance_type').style.display = this.checked ? 'block' : 'none';
+    });
+    </script>
+    
+    {% if workout.exercises %}
+    <ul class="exercise-list">
+        {% for ex in workout.exercises|sort(attribute='order') %}
+        <li class="exercise-list-item">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <strong>{{ ex.exercise.name }}</strong>
+                    <div style="color:#999;font-size:.85em">{{ ex.sets }} sets × {{ ex.reps }} reps</div>
+                    {% if ex.has_accommodating_resistance %}
+                    <div style="color:#d1312c;font-size:.85em">⚡ {{ ex.accommodating_resistance_type }}</div>
+                    {% endif %}
+                    {% if ex.notes %}
+                    <div style="color:#aaa;font-size:.85em">{{ ex.notes }}</div>
+                    {% endif %}
+                </div>
+                <span class="category-badge">{{ ex.exercise.category }}</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-state" style="padding:20px">
+        <p>No exercises added yet</p>
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% if not workouts %}
+<div class="empty-state">
+    <p>No workout days created yet. Add a workout day above to get started.</p>
+</div>
+{% endif %}
+{% endblock %}

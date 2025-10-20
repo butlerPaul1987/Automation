@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="nav-tabs">
+    <a href="{{ url_for('dashboard') }}" class="nav-tab">Dashboard</a>
+    <a href="{{ url_for('notifications') }}" class="nav-tab active">Notifications</a>
+</div>
+
+<div class="card">
+    <h3 class="card-header">Notifications</h3>
+    {% if notifications %}
+    {% for notif in notifications %}
+    <div class="workout-item" style="{% if not notif.is_read %}border-left-color:#d1312c;{% else %}border-left-color:#666;{% endif %}">
+        <div class="workout-header">
+            <span style="{% if not notif.is_read %}font-weight:700;{% endif %}">{{ notif.message }}</span>
+            <span class="workout-date">{{ notif.created_at.strftime('%d %b %Y, %H:%M') }}</span>
+        </div>
+        {% if not notif.is_read %}
+        <form method="POST" action="{{ url_for('mark_notification_read', notification_id=notif.id) }}" style="margin-top:10px">
+            <button type="submit" class="btn btn-small btn-secondary">Mark as Read</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <form method="POST" action="{{ url_for('mark_all_notifications_read') }}">
+        <button type="submit" class="btn btn-secondary">Mark All as Read</button>
+    </form>
+    {% else %}
+    <div class="empty-state">
+        <p>No notifications</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
