@@ -1,4 +1,3 @@
-#!/usr/env python3
 import requests
 from bs4 import BeautifulSoup
 from lxml import etree
@@ -11,6 +10,13 @@ class APIParseFailed(Exception): pass
 class ProductNotFound(Exception): pass
 class RetryLimitExceeded(Exception): pass
 # End custom classes for exceptions
+
+
+# xpath paths
+headerxpath = '//*[@id="main"]/div/div[3]/div/div/h1'
+headerxpath2 = '//*[@id="main"]/div/div[3]/div/div[1]/h1'
+normpricexpath =  '//*[@id="main"]/div/div[3]/div/div/div[2]/span[2]'
+normpricexpath2 = '//*[@id="main"]/div/div[3]/div/div[1]/div[2]/span'
 
 # Product List
 ProdList = {
@@ -49,33 +55,53 @@ class API_Parser:
             raise APIParseFailed()
         soup = BeautifulSoup(data.content, "html.parser")
         dom = etree.HTML(str(soup))
+
+        # --- Helper to check multiple XPaths ---
+        def get_first_xpath(dom, *xpaths):
+            for xp in xpaths:
+                result = dom.xpath(xp)
+                if result:  # non-empty list
+                    return result[0].text.strip()
+            return None
+
         try:
-            Heading = dom.xpath('//*[@id="main"]/div/div[3]/div/div/h1')[0].text                    # Product Name
-            Red_price = dom.xpath('//*[@id="main"]/div/div[3]/div/div/div[2]/span[1]')[0].text      # Reduced Price
-            Norm_price = dom.xpath('//*[@id="main"]/div/div[3]/div/div/div[2]/span[2]')[0].text     # Normal Price
-            print(f"{"Product":<10}: {Heading}\n{"Reduced":<10}: {Red_price}\n{"Normal":<10}: {Norm_price}")
+            Heading = get_first_xpath(dom, headerxpath, headerxpath2)       # Product Name
+            Red_price = get_first_xpath(dom, '//*[@id="main"]/div/div[3]/div/div/div[2]/span[1]',
+                                       '//*[@id="main"]/div/div[3]/div/div[1]/div[2]/span[1]')  # Reduced Price
+            Norm_price = get_first_xpath(dom, normpricexpath, normpricexpath2)  # Normal Price
+
+            if not Heading:
+                raise ProductNotFound("Product name not found")
+
+            print(f"{'Product':<10}: {Heading}\n{'Reduced':<10}: {Red_price}\n{'Normal':<10}: {Norm_price}\n\n")
+
         except IndexError:
             raise ProductNotFound("Product not found")
         except Exception as e:
             raise APIParseFailed(f"Error parsing HTML: {e}")
 
+
 if __name__ == "__main__":
     try:
-        productitem = list(ProdList.items())
-        prodvalue = list(ProdList.values())
-        prodkey = list(ProdList.keys())
-
+        # Iterate through your product dictionary
         for prodkey, prodvalue in ProdList.items():
             url = f"https://groceries.morrisons.com/products/{prodvalue}/{prodkey}"
             
+            print(f"{'URL':<10}: {url}")
+            
             time.sleep(random.random() * 4 + 2.5)
-            print(url)
+            
+            # Create parser instance
             API = API_Parser(URL=url)
             API.getHTML()
+            
     except TokenFailed:
         print("Token failed")
     except APIParseFailed:
         print("API parse failed")
+    except ProductNotFound as e:
+        print(f"Product not found: {e}")
     except Exception as e:
         print(f"Unknown error: {e}")
+
     
